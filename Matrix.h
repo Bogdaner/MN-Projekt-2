@@ -23,6 +23,9 @@ public:
 		return Row(*this, i);
 	}
 
+	Matrix& operator=(const Matrix &m);
+	Matrix operator*(const Matrix a) const;
+	Matrix operator+(const Matrix a) const;
 	~Matrix();
 private:
 	int rows;
