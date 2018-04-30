@@ -34,12 +34,12 @@ int main()
 	}
 	std::cout << std::endl; 
 	std::cout << std::endl;
-	m = m*m2;
+	Matrix m3 = m*m2;
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			std::cout << m[i][j] << " ";
+			std::cout << m3[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}

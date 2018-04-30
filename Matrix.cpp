@@ -48,7 +48,7 @@ Matrix Matrix::operator*(const Matrix a) const
 
 Matrix Matrix::operator+(const Matrix a) const
 {
-	std::string Wrong_dimensions = "Cant multiply these matrices number of columns of first matrix is different than number of rows of second";
+	std::string Wrong_dimensions = "Cant add these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
 	Matrix result(rows, cols);
 
