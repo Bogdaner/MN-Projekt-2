@@ -14,34 +14,14 @@ int main()
 			m2[i][j] = std::rand() % 10;
 		}
 	}
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			std::cout << m[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
+	std::cout << m;
 	std::cout << std::endl;
 	std::cout << std::endl;
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			std::cout << m2[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
+	std::cout << m2;
 	std::cout << std::endl; 
 	std::cout << std::endl;
-	Matrix m3 = m*m2;
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			std::cout << m3[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
+	//m = m2;
+	Matrix m3 = (m+m2);
+	std::cout << m3;
 	return 0;
 }

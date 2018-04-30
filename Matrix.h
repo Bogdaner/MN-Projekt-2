@@ -1,4 +1,5 @@
 #include<string>
+#include<iostream>
 #pragma once
 
 class Matrix
@@ -23,9 +24,12 @@ public:
 		return Row(*this, i);
 	}
 
-	Matrix& operator=(const Matrix &m);
-	Matrix operator*(const Matrix a) const;
-	Matrix operator+(const Matrix a) const;
+	Matrix& operator=(const Matrix& m);
+	Matrix operator*(const Matrix& a);
+	friend Matrix operator+(const Matrix& a, const Matrix& b);
+	Matrix operator-(const Matrix& a);
+	friend std::ostream& operator<<(std::ostream& os, const Matrix &a);
+	void zeroing();
 	~Matrix();
 private:
 	int rows;
