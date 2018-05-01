@@ -20,8 +20,7 @@ int main()
 	std::cout << m2;
 	std::cout << std::endl; 
 	std::cout << std::endl;
-	//m = m2;
-	Matrix m3 = (m+m2);
+	Matrix m3 = m+m2;
 	std::cout << m3;
 	return 0;
 }

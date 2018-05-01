@@ -9,6 +9,26 @@ Matrix::Matrix(int rows, int cols) : rows{ rows }, cols{ cols }
 		elem[i] = new double[cols];
 }
 
+Matrix::Matrix(const Matrix& m)
+{
+	rows = m.rows;
+	cols = m.cols;
+	elem = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		elem[i] = new double[cols];
+
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
+			elem[i][j] = m.elem[i][j];
+}
+
+Matrix::Matrix(Matrix&& m) : elem{ m.elem }, cols{ m.cols }, rows{ m.rows }
+{
+	m.elem = nullptr;
+	m.rows = 0;
+	m.cols = 0;
+}
+
 Matrix& Matrix::operator=(const Matrix& m)
 {
 	double** p = new double*[m.rows];
@@ -44,14 +64,13 @@ Matrix Matrix::operator*(const Matrix& a)
 	return result;
 }
 
-
 Matrix Matrix::operator-(const Matrix& a)
 {
 	std::string Wrong_dimensions = "Cant subtract these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
 
 	Matrix result(rows, cols);
-	for (int i = 0; i<rows; i++)
+	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < cols; j++)
 		{
 			result.elem[i][j] = elem[i][j] - a.elem[i][j];
@@ -59,18 +78,17 @@ Matrix Matrix::operator-(const Matrix& a)
 	return result;
 }
 
-Matrix operator+(const Matrix& a, const Matrix& b)
+Matrix Matrix::operator+(const Matrix& a)
 {
 	std::string Wrong_dimensions = "Cant add these matrices different sizes";
-	if (b.cols != a.cols && b.rows != a.rows) throw Wrong_dimensions;
+	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
 
-	Matrix result(a.rows, a.cols);
-	for (int i = 0; i< result.rows; i++)
+	Matrix result(rows, cols);
+	for (int i = 0; i < result.rows; i++)
 		for (int j = 0; j < result.cols; j++)
 		{
-			result.elem[i][j] = b.elem[i][j] + a.elem[i][j];
+			result.elem[i][j] = elem[i][j] + a.elem[i][j];
 		}
-	std::cout << result;
 	return result;
 }
 
@@ -96,7 +114,7 @@ void Matrix::zeroing()
 
 Matrix::~Matrix()
 {
-	//if (rows < 0 && cols < 0) return;
+	if (rows < 0 && cols < 0) return;
 	for (int i = 0; i < rows; i++)
 		delete[] elem[i];
 	delete[] elem;

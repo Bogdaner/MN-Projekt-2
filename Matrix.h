@@ -6,6 +6,9 @@ class Matrix
 {
 public:
 	Matrix(int rows, int cols);
+	Matrix(const Matrix& m);
+	Matrix(Matrix&& m);
+
 	class Row
 	{
 		friend class Matrix;
@@ -26,7 +29,7 @@ public:
 
 	Matrix& operator=(const Matrix& m);
 	Matrix operator*(const Matrix& a);
-	friend Matrix operator+(const Matrix& a, const Matrix& b);
+	Matrix operator+(const Matrix& a);
 	Matrix operator-(const Matrix& a);
 	friend std::ostream& operator<<(std::ostream& os, const Matrix &a);
 	void zeroing();
