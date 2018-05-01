@@ -47,7 +47,7 @@ Matrix& Matrix::operator=(const Matrix& m)
 	return *this;
 }
 
-Matrix Matrix::operator*(const Matrix& a)
+Matrix Matrix::operator*(const Matrix& a) const
 {
 	std::string Wrong_dimensions = "Cant multiply these matrices number of columns of first matrix is different than number of rows of second";
 	if (cols != a.rows) throw Wrong_dimensions;
@@ -64,7 +64,7 @@ Matrix Matrix::operator*(const Matrix& a)
 	return result;
 }
 
-Matrix Matrix::operator-(const Matrix& a)
+Matrix Matrix::operator-(const Matrix& a) const
 {
 	std::string Wrong_dimensions = "Cant subtract these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
@@ -78,7 +78,7 @@ Matrix Matrix::operator-(const Matrix& a)
 	return result;
 }
 
-Matrix Matrix::operator+(const Matrix& a)
+Matrix Matrix::operator+(const Matrix& a) const
 {
 	std::string Wrong_dimensions = "Cant add these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
@@ -94,9 +94,9 @@ Matrix Matrix::operator+(const Matrix& a)
 
 std::ostream& operator<<(std::ostream& os, const Matrix& a)
 {
-	for (int i = 0; i < a.cols; i++)
+	for (int i = 0; i < a.rows; i++)
 	{
-		for (int j = 0; j < a.rows; j++)
+		for (int j = 0; j < a.cols; j++)
 		{
 			os << a.elem[i][j] << " ";
 		}
@@ -131,6 +131,26 @@ void Matrix::band_matrix(const int a1, const int a2, const int a3)
 				elem[i][j] = 0;
 		}
 	}
+}
+
+double Matrix::get_norm()
+{
+	double sum = 0;
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
+			sum += std::pow(elem[i][j], 2);
+
+	return std::sqrt(sum);
+}
+
+int Matrix::get_rows() const
+{
+	return rows;
+}
+
+int Matrix::get_cols() const
+{
+	return cols;
 }
 
 Matrix::~Matrix()

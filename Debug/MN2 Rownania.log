@@ -1,4 +1,4 @@
 ﻿  main.cpp
-  Matrix.cpp
-  Generating Code...
+c:\users\asd\desktop\code\mn2 rownania\mn2 rownania\main.cpp(48): warning C4715: 'gauss_siedel': not all control paths return a value
+c:\users\asd\desktop\code\mn2 rownania\mn2 rownania\main.cpp(26): warning C4715: 'jacobi': not all control paths return a value
   MN2 Rownania.vcxproj -> C:\Users\asd\Desktop\Code\MN2 Rownania\Debug\MN2 Rownania.exe

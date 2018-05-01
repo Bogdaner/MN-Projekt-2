@@ -18,22 +18,25 @@ public:
 			return parent.elem[row][j];
 		}
 	private:
-		Row(Matrix& parent, int row) : parent{ parent }, row{ row } {};
-		Matrix& parent;
+		Row(const Matrix& parent, int row) : parent{ parent }, row{ row } {};
+		const Matrix& parent;
 		int row;
 	};
-	const Row operator[](int i)
+	const Row operator[](int i) const
 	{
 		return Row(*this, i);
 	}
 
 	Matrix& operator=(const Matrix& m);
-	Matrix operator*(const Matrix& a);
-	Matrix operator+(const Matrix& a);
-	Matrix operator-(const Matrix& a);
+	Matrix operator*(const Matrix& a) const;
+	Matrix operator+(const Matrix& a) const;
+	Matrix operator-(const Matrix& a) const;
 	friend std::ostream& operator<<(std::ostream& os, const Matrix &a);
 	void zeroing();
 	void band_matrix(const int a1,const int a2,const int a3);
+	double get_norm();
+	int get_rows() const;
+	int get_cols() const;
 	~Matrix();
 private:
 	int rows;
