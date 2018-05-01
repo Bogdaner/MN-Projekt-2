@@ -1,6 +1,7 @@
 #include<string>
 #include<tuple>
 #include<iostream>
+#include<fstream>
 #pragma once
 
 class Matrix
@@ -39,6 +40,7 @@ public:
 	double get_norm();
 	int get_rows() const;
 	int get_cols() const;
+	void save(const std::string s) const;
 	~Matrix();
 private:
 	int rows;

@@ -179,6 +179,15 @@ int Matrix::get_cols() const
 	return cols;
 }
 
+void Matrix::save(const std::string s) const
+{
+	std::fstream f{s, f.out};
+	if (f.is_open())
+	{
+		f << *this;
+	}
+}
+
 Matrix::~Matrix()
 {
 	if (rows < 0 && cols < 0) return;
