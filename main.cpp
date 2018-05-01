@@ -96,7 +96,7 @@ int main()
 	//b vector init
 	Matrix b{ N, 1 };
 	for (int i = 0; i < N; i++)
-		b[i][0] = sin((i + 1)*(f + 1));
+		b[i][0] = sin(i*(f + 1));
 
 	//init x vector
 	Matrix x{ N , 1 };
