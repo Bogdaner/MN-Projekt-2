@@ -33,6 +33,7 @@ public:
 	Matrix operator-(const Matrix& a);
 	friend std::ostream& operator<<(std::ostream& os, const Matrix &a);
 	void zeroing();
+	void band_matrix(const int a1,const int a2,const int a3);
 	~Matrix();
 private:
 	int rows;

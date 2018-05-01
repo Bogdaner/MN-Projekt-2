@@ -112,6 +112,27 @@ void Matrix::zeroing()
 			elem[i][j] = 0;
 }
 
+void Matrix::band_matrix(const int a1, const int a2, const int a3)
+{
+	std::string Not_square = "Number of rows and cols are different";
+	if (rows != cols) throw Not_square;
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			if (i == j)
+				elem[i][j] = a1;
+			else if (i + 1 == j || i - 1 == j)
+				elem[i][j] = a2;
+			else if (i + 2 == j || i - 2 == j)
+				elem[i][j] = a3;
+			else
+				elem[i][j] = 0;
+		}
+	}
+}
+
 Matrix::~Matrix()
 {
 	if (rows < 0 && cols < 0) return;
@@ -119,3 +140,4 @@ Matrix::~Matrix()
 		delete[] elem[i];
 	delete[] elem;
 }
+

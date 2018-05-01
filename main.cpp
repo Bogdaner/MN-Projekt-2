@@ -3,24 +3,13 @@
 
 int main()
 {
-	Matrix m(5, 5);
-	Matrix m2(5, 5);
+	const int c = 9;
+	const int d = 3;
+	const int e = 4;
+	const int N = 9 * c*d;
 
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			m[i][j] = std::rand() % 10;
-			m2[i][j] = std::rand() % 10;
-		}
-	}
+	Matrix m{ 20, 20 };
+	m.band_matrix(1, 2, 3);
 	std::cout << m;
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << m2;
-	std::cout << std::endl; 
-	std::cout << std::endl;
-	Matrix m3 = m+m2;
-	std::cout << m3;
 	return 0;
 }
