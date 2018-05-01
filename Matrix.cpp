@@ -20,6 +20,8 @@ Matrix::Matrix(const Matrix& m)
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < cols; j++)
 			elem[i][j] = m.elem[i][j];
+
+	std::cout << "copy\n";
 }
 
 Matrix::Matrix(Matrix&& m) : elem{ m.elem }, cols{ m.cols }, rows{ m.rows }
@@ -27,6 +29,8 @@ Matrix::Matrix(Matrix&& m) : elem{ m.elem }, cols{ m.cols }, rows{ m.rows }
 	m.elem = nullptr;
 	m.rows = 0;
 	m.cols = 0;
+
+	std::cout << "move\n";
 }
 
 Matrix& Matrix::operator=(const Matrix& m)
@@ -186,6 +190,7 @@ void Matrix::save(const std::string s) const
 	{
 		f << *this;
 	}
+	f.close();
 }
 
 Matrix::~Matrix()

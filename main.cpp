@@ -49,14 +49,14 @@ int gauss_siedel(const Matrix& A, const Matrix& b, Matrix& x)
 	return -1;
 }
 
-Matrix LU_decomp(const Matrix& A, const Matrix& b)
+Matrix LU_solve(const Matrix& A, const Matrix& b)
 {
 	const int N = A.get_rows();
 	Matrix L{ N, N }, U{ N, N };
 	std::tie(L, U) = A.LU_decomposition();
 
 	Matrix y{ N, 1 };
-	//creating y temporary vector
+	//creating y temporary vector and solving Ly = b by using forward substitution
 	y[0][0] = b[0][0] / L[0][0]; 
 	for (int i = 1; i < N; i++)
 	{
@@ -66,7 +66,7 @@ Matrix LU_decomp(const Matrix& A, const Matrix& b)
 
 		y[i][0] = (1 / L[i][i])*(b[i][0] - sum);
 	}
-	//getting result
+	//getting result Ux = y back substitution
 	Matrix x{ N, 1 };
 	x[N - 1][0] = y[N - 1][0] / U[N - 1][N - 1];
 	for (int i = N - 2; i >= 0; i--)
@@ -86,12 +86,11 @@ int main()
 	const int d = 3;
 	const int e = 4;
 	const int f = 5;
-	const int N = 1000;//9 * c*d;
+	const int N = 9 * c*d;
 
 	//A matrix init
 	Matrix A{ N, N };
-	//A.band_matrix(5 + e, -1, -1);
-	A.band_matrix(8, -1, -1);
+	A.band_matrix(5 + e, -1, -1);
 
 	//b vector init
 	Matrix b{ N, 1 };
@@ -122,10 +121,10 @@ int main()
 	for (int i = 0; i < N; i++)
 		x4[i][0] = 1;
 
-	int h3 = jacobi(A2, b, x3);
-	int h4 = gauss_siedel(A2, b, x4);
+	//int h3 = jacobi(A2, b, x3);
+	//int h4 = gauss_siedel(A2, b, x4);
 	
-	Matrix s = LU_decomp(A2, b);
+	Matrix s = LU_solve(A2, b);
 
 	x.save("jacobi.txt");
 	x2.save("siedel.txt");
