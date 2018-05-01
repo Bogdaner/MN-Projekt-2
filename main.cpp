@@ -76,6 +76,7 @@ int main()
 	int h = jacobi(A, b, x);
 	int h2 = gauss_siedel(A, b, x2);
 	////////////////////////////////////////////////////////
+
 	Matrix A2{ N,N };
 	A.band_matrix(3, -1, -1);
 
@@ -87,8 +88,9 @@ int main()
 	for (int i = 0; i < N; i++)
 		x4[i][0] = 1;
 
-	int h3 = jacobi(A, b, x);
-	int h4 = gauss_siedel(A, b, x2);
+	//int h3 = jacobi(A, b, x);
+	//int h4 = gauss_siedel(A, b, x2);
+
 
 	return 0;
 }
