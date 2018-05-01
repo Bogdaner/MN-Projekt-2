@@ -23,6 +23,7 @@ int jacobi(const Matrix& A, const Matrix& b, Matrix& x)
 		if (res.get_norm() < 1e-9)
 			return iter + 1;
 	}
+	return -1;
 }
 
 int gauss_siedel(const Matrix& A, const Matrix& b, Matrix& x)
@@ -45,6 +46,39 @@ int gauss_siedel(const Matrix& A, const Matrix& b, Matrix& x)
 		if (res.get_norm() < 1e-9)
 			return iter + 1;
 	}
+	return -1;
+}
+
+Matrix LU_decomp(const Matrix& A, const Matrix& b)
+{
+	Matrix L{ A.get_rows(), A.get_cols() }, U{ A.get_rows(),A.get_cols() };
+	std::tie(L, U) = A.LU_decomposition();
+	const int N = A.get_rows();
+
+	Matrix y{ N, 1 };
+	//creating y temporary vector
+	y[0][0] = b[0][0] / L[0][0]; 
+	for (int i = 1; i < N; i++)
+	{
+		double sum = 0;
+		for (int j = 0; j < i; j++)
+			sum += L[i][j] * y[j][0];
+
+		y[i][0] = (1 / L[i][i])*(b[i][0] - sum);
+	}
+
+	Matrix x{ A.get_rows(), 1 };
+	x[N - 1][0] = y[N - 1][0] / U[N - 1][N - 1];
+	for (int i = N - 2; i >= 0; i--)
+	{
+		double sum = 0;
+		for (int j = i + 1; j <= N - 1; j++)
+			sum += U[i][j] * x[j][0];
+		
+		x[i][0] = (1 / U[i][i])*(y[i][0] - sum);
+
+	}
+	return x;
 }
 
 int main()
@@ -78,7 +112,7 @@ int main()
 	////////////////////////////////////////////////////////
 
 	Matrix A2{ N,N };
-	A.band_matrix(3, -1, -1);
+	A2.band_matrix(3, -1, -1);
 
 	Matrix x3{ N , 1 };
 	for (int i = 0; i < N; i++)
@@ -88,9 +122,11 @@ int main()
 	for (int i = 0; i < N; i++)
 		x4[i][0] = 1;
 
-	//int h3 = jacobi(A, b, x);
-	//int h4 = gauss_siedel(A, b, x2);
-
+	int h3 = jacobi(A2, b, x3);
+	int h4 = gauss_siedel(A2, b, x4);
+	
+	Matrix s = LU_decomp(A2, b);
+	std::cout << s;
 
 	return 0;
 }

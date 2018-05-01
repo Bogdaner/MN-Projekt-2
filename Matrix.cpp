@@ -133,7 +133,7 @@ void Matrix::band_matrix(const int a1, const int a2, const int a3)
 	}
 }
 
-std::tuple<Matrix, Matrix> Matrix::LU_decomposition()
+std::tuple<Matrix, Matrix> Matrix::LU_decomposition() const
 {
 	std::string Not_square = "Number of rows and cols are different";
 	if (rows != cols) throw Not_square;
@@ -147,6 +147,7 @@ std::tuple<Matrix, Matrix> Matrix::LU_decomposition()
 			else
 				L[i][j] = 0;
 		}
+
 	for(int k = 0; k < rows - 1; k++)
 		for (int j = k + 1; j < rows; j++)
 		{
@@ -154,7 +155,6 @@ std::tuple<Matrix, Matrix> Matrix::LU_decomposition()
 			for (int i = k; i < rows; i++)
 				U[j][i] = U[j][i] - (L[j][k] * U[k][i]);
 		}
-
 
 	return std::make_tuple(L, U);
 }
