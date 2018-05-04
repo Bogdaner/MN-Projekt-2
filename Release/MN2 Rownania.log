@@ -1,8 +1,7 @@
-﻿  Matrix.cpp
-  main.cpp
+﻿  main.cpp
   Generating code
-  28 of 198 functions (14.1%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  0 of 246 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MN2 Rownania.vcxproj -> C:\Users\asd\Desktop\Code\MN2 Rownania\Release\MN2 Rownania.exe

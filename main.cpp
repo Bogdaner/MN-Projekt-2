@@ -1,6 +1,8 @@
 #include<iostream>
+#include<vector>
+#include<chrono>
+#include <ctime>
 #include "Matrix.h"
-
 
 int jacobi(const Matrix& A, const Matrix& b, Matrix& x)
 {
@@ -80,13 +82,26 @@ Matrix LU_solve(const Matrix& A, const Matrix& b)
 	return x;
 }
 
+void C_iteratives(const Matrix& A, const Matrix& b, const int N)
+{
+	Matrix x1{ N , 1 };
+	for (int i = 0; i < N; i++)
+		x1[i][0] = 1;
+	Matrix x2{ N , 1 };
+	for (int i = 0; i < N; i++)
+		x2[i][0] = 1;
+
+	int h3 = jacobi(A, b, x1);
+	int h4 = gauss_siedel(A, b, x2);
+}
+
 int main()
 {
 	const int c = 9;
 	const int d = 3;
 	const int e = 4;
 	const int f = 5;
-	const int N = 9 * c*d;
+	const int N = 9 * 100 + c * 10  + d;
 
 	//A matrix init
 	Matrix A{ N, N };
@@ -109,27 +124,55 @@ int main()
 	int h = jacobi(A, b, x);
 	int h2 = gauss_siedel(A, b, x2);
 	////////////////////////////////////////////////////////
-
 	Matrix A2{ N,N };
 	A2.band_matrix(3, -1, -1);
 
-	Matrix x3{ N , 1 };
-	for (int i = 0; i < N; i++)
-		x3[i][0] = 1;
-
-	Matrix x4{ N , 1 };
-	for (int i = 0; i < N; i++)
-		x4[i][0] = 1;
-
-	//int h3 = jacobi(A2, b, x3);
-	//int h4 = gauss_siedel(A2, b, x4);
+	//C_iteratives(A2, b, N);
 	
-	Matrix s = LU_solve(A2, b);
+	//Matrix s = LU_solve(A2, b);
+	//Matrix res = (A2*s) - b;
+	//std::cout << "Norma z residum dla podpunktu C: " << res.get_norm() << std::endl;
 
-	x.save("jacobi.txt");
-	x2.save("siedel.txt");
-	s.save("LU.txt");
+	const std::vector<int> N_E = {100, 500, 1000, 2000, 3000, 4000};
+	for (int size : N_E)
+	{
+		//A matrix init
+		Matrix A3{ size, size };
+		A3.band_matrix(5 + e, -1, -1);
 
+		//b vector init
+		Matrix b3{ size, 1 };
+		for (int i = 0; i < size; i++)
+			b3[i][0] = sin(i*(f + 1));
+
+		Matrix x3{ size , 1 };
+		for (int i = 0; i < size; i++)
+			x3[i][0] = 1;
+
+		int iter;
+		auto start = std::chrono::system_clock::now();
+		iter = jacobi(A3, b3, x3);
+		auto end = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsed_seconds = end - start;
+		std::cout << "For N = " << size << " Jacobi method takes " << elapsed_seconds.count() << "s" << " after "  << iter << " iterations\n";
+
+		for (int i = 0; i < size; i++)
+			x3[i][0] = 1;
+
+		start = std::chrono::system_clock::now();
+		iter = gauss_siedel(A3, b3, x3);
+		end = std::chrono::system_clock::now();
+		elapsed_seconds = end - start;
+		std::cout << "For N = " << size << " Gauss-Seidl method takes " << elapsed_seconds.count() << "s" << " after " << iter << " iterations\n";
+
+		start = std::chrono::system_clock::now();
+		LU_solve(A3, b3);
+		end = std::chrono::system_clock::now();
+		elapsed_seconds = end - start;
+		std::cout << "For N = " << size << " LU method takes " << elapsed_seconds.count() << "s\n";
+
+		std::cout << "\n\n";
+	}
 
 	return 0;
 }
