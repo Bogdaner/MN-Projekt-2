@@ -159,7 +159,7 @@ std::tuple<Matrix, Matrix> Matrix::LU_decomposition() const
 	return std::make_tuple(L, U);
 }
 
-double Matrix::get_norm()
+double Matrix::get_norm() const
 {
 	double sum = 0;
 	for (int i = 0; i < rows; i++)

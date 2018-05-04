@@ -37,7 +37,7 @@ public:
 	void zeroing();
 	void band_matrix(const int a1,const int a2,const int a3);
 	std::tuple<Matrix, Matrix> LU_decomposition() const;
-	double get_norm();
+	double get_norm() const;
 	int get_rows() const;
 	int get_cols() const;
 	void save(const std::string s) const;
