@@ -129,9 +129,9 @@ int main()
 
 	//C_iteratives(A2, b, N);
 	
-	//Matrix s = LU_solve(A2, b);
-	//Matrix res = (A2*s) - b;
-	//std::cout << "Norma z residum dla podpunktu C: " << res.get_norm() << std::endl;
+	Matrix s = LU_solve(A2, b);
+	Matrix res = (A2*s) - b;
+	std::cout << "Norma z residum dla podpunktu C: " << res.get_norm() << std::endl;
 
 	const std::vector<int> N_E = {100, 500, 1000, 2000, 3000, 4000};
 	for (int size : N_E)

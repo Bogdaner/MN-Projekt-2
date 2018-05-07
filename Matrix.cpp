@@ -2,7 +2,6 @@
 
 Matrix::Matrix(int rows, int cols) : rows{ rows }, cols{ cols }
 {
-	std::string Negative_size = "Negative value of number of rows or collumns";
 	if (rows < 0 || cols < 0) throw Negative_size;
 	elem = new double*[rows];
 	for (int i = 0; i < rows; i++)
@@ -49,7 +48,6 @@ Matrix& Matrix::operator=(const Matrix& m)
 
 Matrix Matrix::operator*(const Matrix& a) const
 {
-	std::string Wrong_dimensions = "Cant multiply these matrices number of columns of first matrix is different than number of rows of second";
 	if (cols != a.rows) throw Wrong_dimensions;
 	Matrix result(rows, a.cols);
 
@@ -66,7 +64,6 @@ Matrix Matrix::operator*(const Matrix& a) const
 
 Matrix Matrix::operator-(const Matrix& a) const
 {
-	std::string Wrong_dimensions = "Cant subtract these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
 
 	Matrix result(rows, cols);
@@ -80,7 +77,6 @@ Matrix Matrix::operator-(const Matrix& a) const
 
 Matrix Matrix::operator+(const Matrix& a) const
 {
-	std::string Wrong_dimensions = "Cant add these matrices different sizes";
 	if (cols != a.cols && rows != a.rows) throw Wrong_dimensions;
 
 	Matrix result(rows, cols);
@@ -114,7 +110,6 @@ void Matrix::zeroing()
 
 void Matrix::band_matrix(const int a1, const int a2, const int a3)
 {
-	std::string Not_square = "Number of rows and cols are different";
 	if (rows != cols) throw Not_square;
 
 	for (int i = 0; i < rows; i++)
@@ -135,7 +130,6 @@ void Matrix::band_matrix(const int a1, const int a2, const int a3)
 
 std::tuple<Matrix, Matrix> Matrix::LU_decomposition() const
 {
-	std::string Not_square = "Number of rows and cols are different";
 	if (rows != cols) throw Not_square;
 	Matrix U = *this;
 	Matrix L{rows, cols};
@@ -196,3 +190,7 @@ Matrix::~Matrix()
 		delete[] elem[i];
 	delete[] elem;
 }
+
+const std::string Matrix::Negative_size = "Negative value of number of rows or collumns";
+const std::string Matrix::Not_square = "Number of rows and cols are different";
+const std::string Matrix::Wrong_dimensions = "Cant do this operation different sizes";

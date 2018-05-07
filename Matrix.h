@@ -46,6 +46,9 @@ private:
 	int rows;
 	int cols;
 	double** elem;
+	static const std::string Negative_size;
+	static const std::string Wrong_dimensions;
+	static const std::string Not_square;
 protected:
 };
 
